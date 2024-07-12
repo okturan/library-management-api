@@ -1,5 +1,6 @@
 package dev.patika.librarymanagementapi.services;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +28,8 @@ public class CategoryService {
 
     public CategoryResponseDto getCategoryById(int id) {
         Category category = categoryRepository.findById(id)
-                                              .orElseThrow(
-                                                      () -> new EntityNotFoundException("Category not found with id: " + id));
+                                              .orElseThrow(() -> new EntityNotFoundException(
+                                                      "Category not found with id: " + id));
         return CategoryMapper.categoryToCategoryResponseDto(category);
     }
 
@@ -37,9 +38,18 @@ public class CategoryService {
     }
 
     public void deleteCategory(int id) {
-        if (!categoryRepository.existsById(id)) {
-            throw new EntityNotFoundException("Category not found with id: " + id);
+        Category category = categoryRepository.findById(id)
+                                              .orElseThrow(() -> new EntityNotFoundException(
+                                                      "Category not found with id: " + id));
+
+        if (!category.getBooks()
+                     .isEmpty())
+        {
+            throw new DataIntegrityViolationException(
+                    "Cannot delete category with id " + id + " because it has associated books.");
         }
+
         categoryRepository.deleteById(id);
     }
+
 }

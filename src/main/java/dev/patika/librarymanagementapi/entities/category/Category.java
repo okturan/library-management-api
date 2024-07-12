@@ -29,6 +29,6 @@ public class Category {
     private String description;
 
     @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
-    private List<Book> book = new ArrayList<>();
+    private List<Book> books = new ArrayList<>();
 
 }

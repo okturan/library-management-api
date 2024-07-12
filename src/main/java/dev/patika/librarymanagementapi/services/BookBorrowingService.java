@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import dev.patika.librarymanagementapi.entities.book.Book;
 import dev.patika.librarymanagementapi.entities.bookborrowing.BookBorrowing;
 import dev.patika.librarymanagementapi.entities.bookborrowing.BookBorrowingMapper;
 import dev.patika.librarymanagementapi.entities.bookborrowing.BookBorrowingResponseDto;
@@ -27,14 +28,16 @@ public class BookBorrowingService {
 
     public BookBorrowingResponseDto getBookBorrowingById(int id) {
         BookBorrowing bookBorrowing = bookBorrowingRepository.findById(id)
-                                                             .orElseThrow(
-                                                                     () -> new EntityNotFoundException(
-                                                                             "Book borrowing not found with id: " +
-                                                                             id));
+                                                             .orElseThrow(() -> new EntityNotFoundException(
+                                                                     "Book borrowing not found with id: " + id));
         return BookBorrowingMapper.bookBorrowingToBookBorrowingResponseDto(bookBorrowing);
     }
 
     public BookBorrowing saveBookBorrowing(BookBorrowing bookBorrowing) {
+        Book book = bookBorrowing.getBook();
+        if (book.getStock() <= 0) {
+            throw new IllegalArgumentException("The book is out of stock and cannot be borrowed.");
+        }
         return bookBorrowingRepository.save(bookBorrowing);
     }
 

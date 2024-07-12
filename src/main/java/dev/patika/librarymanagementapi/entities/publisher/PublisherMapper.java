@@ -16,7 +16,6 @@ public class PublisherMapper {
                                    .id(publisher.getId())
                                    .name(publisher.getName())
                                    .establishmentYear(publisher.getEstablishmentYear())
-                                   .address(publisher.getAddress())
                                    .books(books)
                                    .build();
     }

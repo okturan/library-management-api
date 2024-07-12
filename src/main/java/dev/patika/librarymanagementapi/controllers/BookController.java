@@ -15,7 +15,6 @@ import java.util.List;
 
 import dev.patika.librarymanagementapi.entities.book.Book;
 import dev.patika.librarymanagementapi.entities.book.BookResponseDto;
-import dev.patika.librarymanagementapi.services.AuthorService;
 import dev.patika.librarymanagementapi.services.BookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

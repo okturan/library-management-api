@@ -12,6 +12,5 @@ public class PublisherResponseDto {
     private int id;
     private String name;
     private int establishmentYear;
-    private String address;
     private List<String> books;
 }
