@@ -1,8 +1,8 @@
-package dev.patika.librarymanagementapi.entities;
+package dev.patika.librarymanagementapi.entities.bookborrowing;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
+import dev.patika.librarymanagementapi.entities.book.Book;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -19,20 +19,18 @@ import lombok.Setter;
 @Entity
 @Table(name = "book_borrowings")
 public class BookBorrowing {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "borrower_name", nullable = false)
     private String borrowerName;
 
-    @Column(name = "borrowing_date", nullable = false)
     private LocalDate borrowingDate;
 
-    @Column(name = "return_date")
     private LocalDate returnDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     private Book book;
 

@@ -1,11 +1,12 @@
-package dev.patika.librarymanagementapi.entities;
+package dev.patika.librarymanagementapi.entities.author;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import dev.patika.librarymanagementapi.entities.book.Book;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,20 +18,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "publishers")
-public class Publisher {
+@Table(name = "authors")
+public class Author {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Column(nullable = false)
     private String name;
 
-    @Column(name = "establishment_year")
-    private int establishmentYear;
+    private int birthDate;
 
-    private String address;
+    private String country;
 
-    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL)
-    private List<Book> books = new ArrayList<>();
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Book> books;
+
 }

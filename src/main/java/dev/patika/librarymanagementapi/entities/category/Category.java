@@ -1,10 +1,11 @@
-package dev.patika.librarymanagementapi.entities;
+package dev.patika.librarymanagementapi.entities.category;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Column;
+import dev.patika.librarymanagementapi.entities.book.Book;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,16 +19,16 @@ import lombok.Setter;
 @Entity
 @Table(name = "categories")
 public class Category {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
     private String name;
 
     private String description;
 
-    @ManyToMany(mappedBy = "categories")
+    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
     private List<Book> book = new ArrayList<>();
 
 }

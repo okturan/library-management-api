@@ -1,10 +1,12 @@
-package dev.patika.librarymanagementapi.entities;
+package dev.patika.librarymanagementapi.entities.book;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import dev.patika.librarymanagementapi.entities.author.Author;
+import dev.patika.librarymanagementapi.entities.bookborrowing.BookBorrowing;
+import dev.patika.librarymanagementapi.entities.category.Category;
+import dev.patika.librarymanagementapi.entities.publisher.Publisher;
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -24,35 +26,29 @@ import lombok.Setter;
 @Entity
 @Table(name = "books")
 public class Book {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(name = "publication_year")
     private int publicationYear;
 
     private int stock;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id")
+    @ManyToOne(fetch = FetchType.EAGER)
     private Author author;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "book_categories",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
-    )
-    private List<Category> categories = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "book_categories", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private List<Category> categories;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<BookBorrowing> borrowings = new ArrayList<>();
+    private List<BookBorrowing> borrowings;
 
 }
