@@ -1,0 +1,1008 @@
+{
+	"info": {
+		"_postman_id": "f27b4e77-ea72-4886-aee9-2bb86709df14",
+		"name": "REST API",
+		"description": "# Library Management Extended.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36941396"
+	},
+	"item": [
+		{
+			"name": "Authors",
+			"item": [
+				{
+					"name": "Get All Authors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/authors",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"authors"
+							]
+						},
+						"description": "This request fetches all authors from the library."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Author by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/authors/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"authors",
+								"1"
+							]
+						},
+						"description": "Fetches a single author by the given ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"New Author\",\n\t\"birthDate\": 1970,\n\t\"country\": \"Country Name\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/authors",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"authors"
+							]
+						},
+						"description": "Creates a new author with the given details."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Updated Author\",\n\t\"birthDate\": 1965,\n\t\"country\": \"Updated Country\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/authors/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"authors",
+								"1"
+							]
+						},
+						"description": "Updates the author information for the given ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Author",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/authors/5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"authors",
+								"5"
+							]
+						},
+						"description": "Deletes the author with the given ID."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "Get All Books",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books"
+							]
+						},
+						"description": "This request fetches all books from the library."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/books/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books",
+								"1"
+							]
+						},
+						"description": "Fetches a single book by the given ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"New Book\",\n\t\"publicationYear\": 2021,\n\t\"stock\": 50,\n\t\"author\": {\n\t\t\"id\": 1\n\t},\n\t\"categories\": [\n\t\t{\n\t\t\t\"id\": 1\n\t\t}\n\t],\n\t\"publisher\": {\n\t\t\"id\": 1\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books"
+							]
+						},
+						"description": "Creates a new book with the given details."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Updated Book\",\n\t\"publicationYear\": 2022,\n\t\"stock\": 45,\n\t\"author\": {\n\t\t\"id\": 1\n\t},\n\t\"categories\": [\n\t\t{\n\t\t\t\"id\": 2\n\t\t}\n\t],\n\t\"publisher\": {\n\t\t\"id\": 3\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/books/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books",
+								"1"
+							]
+						},
+						"description": "Updates the book information for the given ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Book",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/books/{{book_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"books",
+								"{{book_id}}"
+							]
+						},
+						"description": "Deletes the book with the given ID."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get All Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories"
+							]
+						},
+						"description": "This request fetches all categories from the library."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categories/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories",
+								"2"
+							]
+						},
+						"description": "Fetches a single category by the given ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"New Category\",\n\t\"description\": \"Category Description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/categories",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories"
+							]
+						},
+						"description": "Creates a new category with the given details."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Updated Category\",\n\t\"description\": \"Updated Description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/categories/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories",
+								"1"
+							]
+						},
+						"description": "Updates the category information for the given ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([204]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/categories/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"categories",
+								"3"
+							]
+						},
+						"description": "Deletes the category with the given ID."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Publishers",
+			"item": [
+				{
+					"name": "Get All Publishers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/publishers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"publishers"
+							]
+						},
+						"description": "This request fetches all publishers from the library."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Publisher by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/publishers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"publishers",
+								"1"
+							]
+						},
+						"description": "Fetches a single publisher by the given ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Publisher",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"New Publisher\",\n\t\"establishmentYear\": 1990,\n\t\"address\": \"Publisher Address\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/publishers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"publishers"
+							]
+						},
+						"description": "Creates a new publisher with the given details."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Publisher",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Updated Publisher\",\n\t\"establishmentYear\": 1985,\n\t\"address\": \"Updated Address\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/publishers/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"publishers",
+								"2"
+							]
+						},
+						"description": "Updates the publisher information for the given ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Publisher",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"pm.expect(pm.response.code).to.be.oneOf([204]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/publishers/4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"publishers",
+								"4"
+							]
+						},
+						"description": "Deletes the publisher with the given ID."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Book Borrowings",
+			"item": [
+				{
+					"name": "Get All Book Borrowings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/bookborrowings",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bookborrowings"
+							]
+						},
+						"description": "This request fetches all book borrowings from the library."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book Borrowing by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/bookborrowings/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bookborrowings",
+								"1"
+							]
+						},
+						"description": "Fetches a single book borrowing by the given ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Book Borrowing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful POST request\", function () {",
+									"pm.expect(pm.response.code).to.be.oneOf([201]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"borrowerName\": \"John Doe\",\n\t\"borrowingDate\": \"2023-01-15\",\n\t\"returnDate\": \"2023-02-15\",\n\t\"book\": {\n\t\t\"id\": 3\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/bookborrowings",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bookborrowings"
+							]
+						},
+						"description": "Creates a new book borrowing with the given details."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Book Borrowing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful PUT request\", function () {",
+									"pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"borrowerName\": \"Jane Doe\",\n\t\"borrowingDate\": \"2023-01-20\",\n\t\"returnDate\": \"2023-02-20\",\n\t\"book\": {\n\t\t\"id\": 1\n\t}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/bookborrowings/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bookborrowings",
+								"1"
+							]
+						},
+						"description": "Updates the book borrowing information for the given ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Book Borrowing",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Successful DELETE request\", function () {",
+									"pm.expect(pm.response.code).to.be.oneOf([204]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/bookborrowings/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"bookborrowings",
+								"1"
+							]
+						},
+						"description": "Deletes the book borrowing with the given ID."
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "localhost:8080/api"
+		}
+	]
+}
