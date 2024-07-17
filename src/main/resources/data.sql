@@ -1,5 +1,5 @@
 -- Inserting sample authors
-INSERT INTO authors (name, birth_date, country)
+INSERT INTO author (name, birth_date, country)
 VALUES ('Margaret Atwood', 1939, 'Canada'),
        ('Salman Rushdie', 1947, 'India'),
        ('Toni Morrison', 1931, 'United States'),
@@ -12,7 +12,7 @@ VALUES ('Margaret Atwood', 1939, 'Canada'),
        ('Isabel Allende', 1942, 'Chile');
 
 -- Inserting sample publishers
-INSERT INTO publishers (name, establishment_year, address)
+INSERT INTO publisher (name, establishment_year, address)
 VALUES ('Vintage Books', 1954, '1745 Broadway, New York, United States'),
        ('Faber & Faber', 1929, '74-77 Great Russell Street, London, United Kingdom'),
        ('Knopf Doubleday', 1897, '1745 Broadway, New York, United States'),
@@ -20,7 +20,7 @@ VALUES ('Vintage Books', 1954, '1745 Broadway, New York, United States'),
        ('Grove Atlantic', 1917, '154 West 14th Street, New York, United States');
 
 -- Inserting sample categories
-INSERT INTO categories (name, description)
+INSERT INTO category (name, description)
 VALUES ('Literary Fiction', 'Fictional works of high artistic merit'),
        ('Dystopian', 'Books set in imagined societies with great suffering or injustice'),
        ('Magical Realism', 'Fiction that blends magical elements with the real world'),
@@ -33,7 +33,7 @@ VALUES ('Literary Fiction', 'Fictional works of high artistic merit'),
        ('Multicultural Fiction', 'Fiction exploring multiple cultural perspectives');
 
 -- Inserting sample books
-INSERT INTO books (name, publication_year, stock, author_id, publisher_id)
+INSERT INTO book (name, publication_year, stock, author_id, publisher_id)
 VALUES ('The Handmaid''s Tale', 1985, 10, 1, 1),
        ('Midnight''s Children', 1981, 8, 2, 2),
        ('Beloved', 1987, 7, 3, 3),
@@ -51,7 +51,7 @@ VALUES ('The Handmaid''s Tale', 1985, 10, 1, 1),
        ('Americanah', 2013, 9, 5, 4);
 
 -- Inserting sample book-category relationships
-INSERT INTO book_categories (book_id, category_id)
+INSERT INTO book_category (book_id, category_id)
 VALUES (1, 1),
        (1, 2),
        (2, 1),
@@ -84,7 +84,7 @@ VALUES (1, 1),
        (15, 10);
 
 -- Inserting sample book borrowings
-INSERT INTO book_borrowings (borrower_name, borrowing_date, return_date, book_id)
+INSERT INTO book_borrowing (borrower_name, borrowing_date, return_date, book_id)
 VALUES ('Emma Thompson', '2023-01-10', '2023-01-25', 1),
        ('Daniel Radcliffe', '2023-01-15', '2023-01-30', 2),
        ('Lupita Nyong''o', '2023-02-01', '2023-02-16', 3),

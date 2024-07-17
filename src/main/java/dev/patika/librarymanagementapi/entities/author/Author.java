@@ -14,11 +14,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "authors")
+@Table
 public class Author {
 
     @Id
@@ -31,7 +32,7 @@ public class Author {
 
     private String country;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "author", orphanRemoval = true)
     private List<Book> books;
 
 }

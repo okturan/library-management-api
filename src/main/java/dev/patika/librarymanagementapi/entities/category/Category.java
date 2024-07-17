@@ -1,11 +1,9 @@
 package dev.patika.librarymanagementapi.entities.category;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import dev.patika.librarymanagementapi.entities.book.Book;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "categories")
+@Table
 public class Category {
 
     @Id
@@ -28,7 +26,7 @@ public class Category {
 
     private String description;
 
-    @ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
-    private List<Book> books = new ArrayList<>();
+    @ManyToMany(mappedBy = "category")
+    private List<Book> book;
 
 }

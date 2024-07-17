@@ -8,7 +8,7 @@ import dev.patika.librarymanagementapi.entities.category.Category;
 public class BookMapper {
     public static BookResponseDto BookToBookResponseDto(Book book) {
 
-        List<String> categories = book.getCategories()
+        List<String> categories = book.getCategory()
                                       .stream()
                                       .map(Category::getName)
                                       .collect(Collectors.toList());

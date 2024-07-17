@@ -6,14 +6,11 @@ import dev.patika.librarymanagementapi.entities.author.Author;
 import dev.patika.librarymanagementapi.entities.bookborrowing.BookBorrowing;
 import dev.patika.librarymanagementapi.entities.category.Category;
 import dev.patika.librarymanagementapi.entities.publisher.Publisher;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -24,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "books")
+@Table
 public class Book {
 
     @Id
@@ -37,18 +34,16 @@ public class Book {
 
     private int stock;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Author author;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "book_categories", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categories;
+    @ManyToMany
+    private List<Category> category;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "publisher_id")
+    @ManyToOne
     private Publisher publisher;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "book", orphanRemoval = true)
     private List<BookBorrowing> borrowings;
 
 }

@@ -10,6 +10,7 @@ import dev.patika.librarymanagementapi.entities.bookborrowing.BookBorrowing;
 import dev.patika.librarymanagementapi.entities.bookborrowing.BookBorrowingMapper;
 import dev.patika.librarymanagementapi.entities.bookborrowing.BookBorrowingResponseDto;
 import dev.patika.librarymanagementapi.repositories.BookBorrowingRepository;
+import dev.patika.librarymanagementapi.repositories.BookRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class BookBorrowingService {
 
     private final BookBorrowingRepository bookBorrowingRepository;
+    private final BookRepository bookRepository;
 
     public List<BookBorrowingResponseDto> getAllBookBorrowings() {
         return bookBorrowingRepository.findAll()
@@ -34,10 +36,23 @@ public class BookBorrowingService {
     }
 
     public BookBorrowing saveBookBorrowing(BookBorrowing bookBorrowing) {
-        Book book = bookBorrowing.getBook();
+        // Fetch the complete book information using the ID
+        Book book = bookRepository.findById(bookBorrowing.getBook().getId())
+                                  .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + bookBorrowing.getBook().getId()));
+
+        // Check if the book is in stock
         if (book.getStock() <= 0) {
             throw new IllegalArgumentException("The book is out of stock and cannot be borrowed.");
         }
+
+        // Set the fetched book to the bookBorrowing object
+        bookBorrowing.setBook(book);
+
+        // Decrease the stock
+        book.setStock(book.getStock() - 1);
+        bookRepository.save(book);
+
+        // Save the borrowing
         return bookBorrowingRepository.save(bookBorrowing);
     }
 

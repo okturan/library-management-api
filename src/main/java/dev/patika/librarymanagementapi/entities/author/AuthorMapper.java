@@ -1,23 +1,23 @@
 package dev.patika.librarymanagementapi.entities.author;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
 
 import dev.patika.librarymanagementapi.entities.book.Book;
 
-public class AuthorMapper {
-    public static AuthorResponseDto AuthorToAuthorResponseDto(Author author) {
-        List<String> books = author.getBooks()
-                                   .stream()
-                                   .map(Book::getName)
-                                   .collect(Collectors.toList());
+@Mapper(componentModel = "spring")
+public interface AuthorMapper {
 
-        return AuthorResponseDto.builder()
-                                .id(author.getId())
-                                .name(author.getName())
-                                .birthDate(author.getBirthDate())
-                                .country(author.getCountry())
-                                .books(books)
-                                .build();
+    AuthorMapper INSTANCE = Mappers.getMapper(AuthorMapper.class);
+
+    @Mapping(target = "books", source = "books")
+    AuthorResponseDto authorToAuthorResponseDto(Author author);
+
+    Author updateAuthorFromDto(AuthorRequestDto authorRequestDto, @MappingTarget Author author);
+
+    default String map(Book value) {
+        return value.getName();
     }
 }

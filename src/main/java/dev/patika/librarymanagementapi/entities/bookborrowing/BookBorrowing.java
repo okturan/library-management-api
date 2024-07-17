@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "book_borrowings")
+@Table
 public class BookBorrowing {
 
     @Id
@@ -31,7 +31,6 @@ public class BookBorrowing {
     private LocalDate returnDate;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "book_id")
     private Book book;
 
 }

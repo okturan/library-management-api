@@ -42,7 +42,7 @@ public class CategoryService {
                                               .orElseThrow(() -> new EntityNotFoundException(
                                                       "Category not found with id: " + id));
 
-        if (!category.getBooks()
+        if (!category.getBook()
                      .isEmpty())
         {
             throw new DataIntegrityViolationException(

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import dev.patika.librarymanagementapi.entities.author.Author;
+import dev.patika.librarymanagementapi.entities.author.AuthorRequestDto;
 import dev.patika.librarymanagementapi.entities.author.AuthorResponseDto;
 import dev.patika.librarymanagementapi.services.AuthorService;
 import jakarta.validation.Valid;
@@ -43,9 +44,8 @@ public class AuthorController {
     }
 
     @PutMapping("/{id}")
-    public Author updateAuthor(@PathVariable int id, @Valid @RequestBody Author author) {
-        author.setId(id);
-        return authorService.saveAuthor(author);
+    public AuthorResponseDto updateAuthor(@PathVariable int id, @Valid @RequestBody AuthorRequestDto author) {
+        return authorService.updateAuthor(id, author);
     }
 
     @DeleteMapping("/{id}")

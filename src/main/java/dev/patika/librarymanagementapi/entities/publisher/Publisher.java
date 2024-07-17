@@ -1,12 +1,9 @@
 package dev.patika.librarymanagementapi.entities.publisher;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import dev.patika.librarymanagementapi.entities.book.Book;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "publishers")
+@Table
 public class Publisher {
 
     @Id
@@ -31,6 +28,6 @@ public class Publisher {
 
     private String address;
 
-    @OneToMany(mappedBy = "publisher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Book> books = new ArrayList<>();
+    @OneToMany(mappedBy = "publisher", orphanRemoval = true)
+    private List<Book> books;
 }
