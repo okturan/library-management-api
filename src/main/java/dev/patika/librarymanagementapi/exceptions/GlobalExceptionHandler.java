@@ -3,6 +3,7 @@ package dev.patika.librarymanagementapi.exceptions;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -47,6 +48,21 @@ public class GlobalExceptionHandler {
         body.put("details", ex.getConstraintViolations()
                               .stream()
                               .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+                              .toList());
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex)
+    {
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", LocalDateTime.now());
+        body.put("message", "Validation error");
+        body.put("details", ex.getBindingResult()
+                              .getFieldErrors()
+                              .stream()
+                              .map(error -> error.getField() + ": " + error.getDefaultMessage())
                               .toList());
 
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);

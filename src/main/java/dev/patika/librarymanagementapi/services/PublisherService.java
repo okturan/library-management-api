@@ -1,6 +1,7 @@
 package dev.patika.librarymanagementapi.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class PublisherService {
 
     private final PublisherRepository publisherRepository;
@@ -33,10 +35,12 @@ public class PublisherService {
         return PublisherMapper.publisherToPublisherResponseDto(publisher);
     }
 
+    @Transactional
     public Publisher savePublisher(Publisher publisher) {
         return publisherRepository.save(publisher);
     }
 
+    @Transactional
     public void deletePublisher(int id) {
         if (!publisherRepository.existsById(id)) {
             throw new EntityNotFoundException("Publisher not found with id: " + id);

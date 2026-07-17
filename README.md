@@ -1,57 +1,96 @@
-## DB Setup
+# Library Management API
 
-To test simply create a postgres server on localhost with the following values:
-- name: library-management-system
-- port: 5432
-- username: postgres
-- password: postgres
+A Spring Boot and PostgreSQL learning project for managing authors, books, categories, publishers, and borrowing records. The API keeps persistence, mapping, service rules, HTTP controllers, and error translation in separate layers; its included sample catalog makes the relationships easy to explore locally.
 
-### Authors
+## What it demonstrates
 
-| HTTP Method | Endpoint             | Description         |
-|-------------|----------------------|---------------------|
-| GET         | /api/authors         | Get all authors     |
-| GET         | /api/authors/{id}    | Get an author by ID |
-| POST        | /api/authors         | Create a new author |
-| PUT         | /api/authors/{id}    | Update an author by ID  |
-| DELETE      | /api/authors/{id}    | Delete an author by ID  |
+- Five CRUD resource families with DTO-shaped read responses
+- JPA relationships across authors, books, categories, publishers, and borrowings
+- Borrowing rules that reject unavailable books, decrement stock once on creation, and avoid double-decrementing same-book updates
+- Consistent JSON error responses for missing entities, invalid input, and relationship conflicts
+- A ready-to-import [Postman collection](REST%20API.postman_collection.json)
+- Database-independent API verification with an isolated in-memory test profile
 
-### Books
+## Architecture
 
-| HTTP Method | Endpoint             | Description      |
-|-------------|----------------------|------------------|
-| GET         | /api/books           | Get all books    |
-| GET         | /api/books/{id}      | Get a book by ID |
-| POST        | /api/books           | Create a new book  |
-| PUT         | /api/books/{id}      | Update a book by ID |
-| DELETE      | /api/books/{id}      | Delete a book by ID  |
+```text
+HTTP request
+    │
+    ▼
+Controller ── validates input and maps status codes
+    │
+    ▼
+Service ───── applies lookup, stock, and relationship rules
+    │
+    ▼
+Repository ── Spring Data JPA
+    │
+    ▼
+PostgreSQL
 
-### Categories
+Entities ──── persisted relationships
+Mappers ───── compact response DTOs without recursive entity graphs
+Advice ────── stable JSON errors at the HTTP boundary
+```
 
-| HTTP Method | Endpoint                 | Description            |
-|-------------|--------------------------|------------------------|
-| GET         | /api/categories          | Get all categories     |
-| GET         | /api/categories/{id}     | Get a category by ID   |
-| POST        | /api/categories          | Create a new category  |
-| PUT         | /api/categories/{id}     | Update a category by ID|
-| DELETE      | /api/categories/{id}     | Delete a category by ID|
+## Run locally
 
-### Publishers
+Requirements: Java 17 and PostgreSQL.
 
-| HTTP Method | Endpoint                 | Description              |
-|-------------|--------------------------|--------------------------|
-| GET         | /api/publishers          | Get all publishers       |
-| GET         | /api/publishers/{id}     | Get a publisher by ID    |
-| POST        | /api/publishers          | Create a new publisher   |
-| PUT         | /api/publishers/{id}     | Update a publisher by ID |
-| DELETE      | /api/publishers/{id}     | Delete a publisher by ID |
+Create an empty database and a dedicated local user, then provide the connection explicitly:
 
-### Book Borrowings
+```bash
+export JDBC_URL='jdbc:postgresql://localhost:5432/library-management-system'
+export DB_USER='library_app'
+export DB_PASSWORD='<your local password>'
 
-| HTTP Method | Endpoint                 | Description                |
-|-------------|--------------------------|--------------------------  |
-| GET         | /api/bookborrowings      | Get all book borrowings    |
-| GET         | /api/bookborrowings/{id} | Get a book borrowing by ID |
-| POST        | /api/bookborrowings      | Create a new book borrowing|
-| PUT         | /api/bookborrowings/{id} | Update a book borrowing by ID |
-| DELETE      | /api/bookborrowings/{id} | Delete a book borrowing by ID |
+./mvnw spring-boot:run
+```
+
+Production-style startup is fail-closed: there are no repository-owned database credentials, Hibernate validates the existing schema, and sample data is disabled by default.
+
+For a disposable local catalog, opt into schema creation and the tracked sample dataset:
+
+```bash
+export JPA_DDL_AUTO=create
+export SQL_INIT_MODE=always
+export DEFER_DATASOURCE_INITIALIZATION=true
+
+./mvnw spring-boot:run
+```
+
+These switches are intentionally explicit because `create` replaces the application schema.
+
+## API surface
+
+All routes are under `/api`.
+
+| Resource | Collection endpoint | Supported operations |
+|---|---|---|
+| Authors | `/api/authors` | list, read, create, update, delete |
+| Books | `/api/books` | list, read, create, update, delete |
+| Categories | `/api/categories` | list, read, create, update, delete |
+| Publishers | `/api/publishers` | list, read, create, update, delete |
+| Borrowings | `/api/bookborrowings` | list, read, create, update, delete |
+
+Collection requests use `GET` and `POST`; item requests append `/{id}` and use `GET`, `PUT`, or `DELETE`. The Postman collection's `base_url` should be `http://localhost:8080/api`.
+
+Example:
+
+```bash
+curl -s http://localhost:8080/api/authors
+```
+
+## Verification
+
+```bash
+./mvnw verify
+```
+
+The test profile uses H2 in PostgreSQL compatibility mode, never needs local credentials, and does not load the sample dataset. The executable checks cover application startup, create/read behavior through the public HTTP API, 404 translation, validation failures, borrowing stock transitions, and the production configuration boundary. GitHub Actions runs the same verification from a clean checkout on Java 17.
+
+## Scope
+
+This is a portfolio learning project, not a hosted multi-user library service. Authentication, authorization, migrations, pagination, concurrency control for simultaneous borrowers, and production deployment are outside its current boundary.
+
+No open-source license has been granted yet; reuse remains an owner decision.
