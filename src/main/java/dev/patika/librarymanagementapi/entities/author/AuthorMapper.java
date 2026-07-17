@@ -15,6 +15,8 @@ public interface AuthorMapper {
     @Mapping(target = "books", source = "books")
     AuthorResponseDto authorToAuthorResponseDto(Author author);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "books", ignore = true)
     Author updateAuthorFromDto(AuthorRequestDto authorRequestDto, @MappingTarget Author author);
 
     default String map(Book value) {

@@ -1,21 +1,22 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/library-management-system
-    username: postgres
-    password: postgres
+    url: ${JDBC_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
+    open-in-view: false
     hibernate:
-      ddl-auto: create
-    show-sql: true
+      ddl-auto: ${JPA_DDL_AUTO:validate}
+    show-sql: ${JPA_SHOW_SQL:false}
     properties:
       hibernate:
         format_sql: true
-    defer-datasource-initialization: true
+    defer-datasource-initialization: ${DEFER_DATASOURCE_INITIALIZATION:false}
   application:
     name: library-management-api
   sql:
     init:
-      mode: always
+      mode: ${SQL_INIT_MODE:never}
       platform: postgres
       data-locations: classpath:data.sql

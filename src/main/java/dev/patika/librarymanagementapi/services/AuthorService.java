@@ -1,6 +1,7 @@
 package dev.patika.librarymanagementapi.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
@@ -35,10 +37,12 @@ public class AuthorService {
         return authorMapper.authorToAuthorResponseDto(author);
     }
 
+    @Transactional
     public Author saveAuthor(Author author) {
         return authorRepository.save(author);
     }
 
+    @Transactional
     public AuthorResponseDto updateAuthor(int id, AuthorRequestDto authorRequestDto) {
         Optional<Author> optionalAuthor = authorRepository.findById(id);
 
@@ -52,6 +56,7 @@ public class AuthorService {
         return authorMapper.authorToAuthorResponseDto(authorRepository.save(mergedAauthor));
     }
 
+    @Transactional
     public void deleteAuthor(int id) {
         if (!authorRepository.existsById(id)) {
             throw new EntityNotFoundException("Author not found with id: " + id);

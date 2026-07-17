@@ -1,6 +1,7 @@
 package dev.patika.librarymanagementapi.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class BookService {
 
     private final BookRepository bookRepository;
@@ -31,10 +33,12 @@ public class BookService {
         return BookMapper.BookToBookResponseDto(book);
     }
 
+    @Transactional
     public Book saveBook(Book book) {
         return bookRepository.save(book);
     }
 
+    @Transactional
     public void deleteBook(int id) {
         if (!bookRepository.existsById(id)) {
             throw new EntityNotFoundException("Book Not Found with id: " + id);

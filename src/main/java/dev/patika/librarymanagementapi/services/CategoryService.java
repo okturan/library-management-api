@@ -2,6 +2,7 @@ package dev.patika.librarymanagementapi.services;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -33,10 +35,12 @@ public class CategoryService {
         return CategoryMapper.categoryToCategoryResponseDto(category);
     }
 
+    @Transactional
     public Category saveCategory(Category category) {
         return categoryRepository.save(category);
     }
 
+    @Transactional
     public void deleteCategory(int id) {
         Category category = categoryRepository.findById(id)
                                               .orElseThrow(() -> new EntityNotFoundException(

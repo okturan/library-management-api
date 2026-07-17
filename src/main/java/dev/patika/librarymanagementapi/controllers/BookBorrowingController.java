@@ -39,13 +39,12 @@ public class BookBorrowingController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookBorrowing createBookBorrowing(@Valid @RequestBody BookBorrowing bookBorrowing) {
-        return bookBorrowingService.saveBookBorrowing(bookBorrowing);
+        return bookBorrowingService.createBookBorrowing(bookBorrowing);
     }
 
     @PutMapping("/{id}")
     public BookBorrowing updateBookBorrowing(@PathVariable int id, @Valid @RequestBody BookBorrowing bookBorrowing) {
-        bookBorrowing.setId(id);
-        return bookBorrowingService.saveBookBorrowing(bookBorrowing);
+        return bookBorrowingService.updateBookBorrowing(id, bookBorrowing);
     }
 
     @DeleteMapping("/{id}")

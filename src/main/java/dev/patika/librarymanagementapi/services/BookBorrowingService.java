@@ -1,6 +1,7 @@
 package dev.patika.librarymanagementapi.services;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class BookBorrowingService {
 
     private final BookBorrowingRepository bookBorrowingRepository;
@@ -35,27 +37,53 @@ public class BookBorrowingService {
         return BookBorrowingMapper.bookBorrowingToBookBorrowingResponseDto(bookBorrowing);
     }
 
-    public BookBorrowing saveBookBorrowing(BookBorrowing bookBorrowing) {
-        // Fetch the complete book information using the ID
-        Book book = bookRepository.findById(bookBorrowing.getBook().getId())
-                                  .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + bookBorrowing.getBook().getId()));
-
-        // Check if the book is in stock
-        if (book.getStock() <= 0) {
-            throw new IllegalArgumentException("The book is out of stock and cannot be borrowed.");
-        }
-
-        // Set the fetched book to the bookBorrowing object
+    @Transactional
+    public BookBorrowing createBookBorrowing(BookBorrowing bookBorrowing) {
+        Book book = requireAvailableBook(bookBorrowing.getBook().getId());
         bookBorrowing.setBook(book);
-
-        // Decrease the stock
-        book.setStock(book.getStock() - 1);
-        bookRepository.save(book);
-
-        // Save the borrowing
+        decrementStock(book);
         return bookBorrowingRepository.save(bookBorrowing);
     }
 
+    @Transactional
+    public BookBorrowing updateBookBorrowing(int id, BookBorrowing update) {
+        BookBorrowing existing = bookBorrowingRepository.findById(id)
+                                                        .orElseThrow(() -> new EntityNotFoundException(
+                                                                "Book borrowing not found with id: " + id));
+        Book requestedBook = bookRepository.findById(update.getBook().getId())
+                                           .orElseThrow(() -> new EntityNotFoundException(
+                                                   "Book not found with id: " + update.getBook().getId()));
+
+        if (existing.getBook().getId() != requestedBook.getId()) {
+            Book previousBook = existing.getBook();
+            previousBook.setStock(previousBook.getStock() + 1);
+            bookRepository.save(previousBook);
+            if (requestedBook.getStock() <= 0) {
+                throw new IllegalArgumentException("The book is out of stock and cannot be borrowed.");
+            }
+            decrementStock(requestedBook);
+        }
+
+        update.setId(id);
+        update.setBook(requestedBook);
+        return bookBorrowingRepository.save(update);
+    }
+
+    private Book requireAvailableBook(int id) {
+        Book book = bookRepository.findById(id)
+                                  .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
+        if (book.getStock() <= 0) {
+            throw new IllegalArgumentException("The book is out of stock and cannot be borrowed.");
+        }
+        return book;
+    }
+
+    private void decrementStock(Book book) {
+        book.setStock(book.getStock() - 1);
+        bookRepository.save(book);
+    }
+
+    @Transactional
     public void deleteBookBorrowing(int id) {
         if (!bookBorrowingRepository.existsById(id)) {
             throw new EntityNotFoundException("Book borrowing not found with id: " + id);
