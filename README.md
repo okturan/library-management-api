@@ -93,4 +93,8 @@ The test profile uses H2 in PostgreSQL compatibility mode, never needs local cre
 
 This is a portfolio learning project, not a hosted multi-user library service. Authentication, authorization, migrations, pagination, concurrency control for simultaneous borrowers, and production deployment are outside its current boundary.
 
-No open-source license has been granted yet; reuse remains an owner decision.
+## License
+
+Original source code and documentation in this repository are available under
+the [MIT License](./LICENSE). Third-party dependencies and generated Maven
+Wrapper files remain subject to their own terms.
